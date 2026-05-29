@@ -9,8 +9,6 @@ The code is intended to work with a Wiener/CC-USB CAMAC controller using the `li
 ```text
 .
 ├── Makefile              # default Makefile
-├── Makefile.mac          # macOS build file
-├── Makefile.ubuntu       # Ubuntu build file
 ├── include
 │   └── libxxusb.h
 ├── src
