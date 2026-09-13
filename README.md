@@ -38,6 +38,30 @@ make clean
 make 
 ```
 
+## Build status
+
+**Compile-check only** (2026-09-12): No CAMAC/Wiener hardware was exercised.
+
+### Build attempt 1: Wiener USB library (`camac/wiener/src/`)
+
+**Command:** `cd camac/wiener/src && make clean && make`
+
+**Result:** FAILED
+
+**Error:** `fatal error: 'malloc.h' file not found`
+
+The build encountered a missing header file (`malloc.h`) in `libxxusb.c:49`. This header was part of older C standards but has been removed in modern C implementations; the allocation functions are now in `<stdlib.h>`.
+
+### Build attempt 2: Top-level camac program (`camac/`)
+
+**Command:** `cd camac && make clean && make`
+
+**Result:** FAILED (cascading from Build attempt 1)
+
+**Error:** `fatal error: 'libxxusb.h' file not found`
+
+The build could not locate the libxxusb header because Build attempt 1 did not produce the required library. The linker search path expected the library at `./../../lib/libxx_usb.so`, but that file was never generated due to the failure in Build attempt 1.
+
 ## Running
 
 After building, the executable should be:
